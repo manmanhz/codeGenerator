@@ -1,6 +1,7 @@
 package com.best.generator;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -43,18 +44,26 @@ public abstract class CodeGenerator {
     }
 
     public void generate() throws IOException, TemplateException, ClassNotFoundException {
-        // file path：项目路径+包路径+文件名
-        File javaFilePath = new File(getDataModal().getOutputFileDirPath());
-        javaFilePath.mkdirs();
 
-        Map root = new HashMap();
+        Map<String, DataModal> root = new HashMap<>();
         root.put("dataModal", getDataModal());
 
-//         Writer out = new FileWriter(getDataModal().getOutputFilePath());
-        Writer out = new PrintWriter(System.out);
+        Writer out;
+        String writer = ConfigHelper.getString("generator.writer");
+        if ("file".equals(writer)) {
+            // file path：项目路径+包路径+文件名
+
+            File javaFilePath = new File(getDataModal().getOutputFileDirPath());
+            javaFilePath.mkdirs();
+            out = new FileWriter(getDataModal().getOutputFilePath());
+        } else {
+            out = new PrintWriter(System.out);
+        }
+
         getTemplate().process(root, out);
         System.out.println(getDataModal().getOutputFilePath());
     }
+
 
     protected abstract DataModal getDataModal() throws ClassNotFoundException;
 

@@ -3,6 +3,7 @@ package com.best;
 import com.best.generator.CodeGenerator;
 import com.best.generator.DaoGenerator;
 import com.best.generator.DaoImplGenerator;
+import com.best.generator.MapperGenerator;
 import com.best.generator.ServiceGenerator;
 import com.best.generator.ServiceImplGenerator;
 import com.best.generator.SoGenerator;
@@ -31,6 +32,7 @@ public class GroupGenerator {
         generatorMap.put("daoImpl", new DaoImplGenerator());
         generatorMap.put("service", new ServiceGenerator());
         generatorMap.put("serviceImpl", new ServiceImplGenerator());
+        generatorMap.put("mapper", new MapperGenerator());
     }
 
     public void generate() throws TemplateException, IOException, ClassNotFoundException {
